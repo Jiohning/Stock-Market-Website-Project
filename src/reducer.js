@@ -29,7 +29,13 @@ const initialState = {
       marketcap: '186.23B'
     }
   ],
-  selected: undefined
+  selected: {
+    name: 'Disney',
+    symbol: 'DIS',
+    price: 'US$103.11',
+    today: '-3.31%',
+    marketcap: '186.23B'
+  }
 };
 
 function reducer(state = initialState, action){
