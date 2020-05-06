@@ -1,5 +1,4 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,7 +7,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { selectStock } from '../action.js';
+import { useDispatch, useSelector } from 'react-redux';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+
+import { setStocks } from '../actions/setStock';
 
 const useStyles = makeStyles({
   table: {
@@ -16,11 +22,37 @@ const useStyles = makeStyles({
   },
 });
 
-function StockList({stocks, selectStock}) {
+export default function StockList() {
   const classes = useStyles();
+  const stocks = useSelector(state => state.stocks);
+  const [value, setValue] = useState('KS');
+  const dispatch = useDispatch();
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
 
   return (
+    
     <div>
+      <div>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">EXCHANGE</FormLabel>
+          <RadioGroup aria-label="exchange" name="exchange" value={value} onChange={handleChange}>
+            <FormControlLabel 
+              value="US" control={<Radio />} label="US" 
+              onClick={() => {
+                dispatch(setStocks('US'));
+              }}/>
+            <FormControlLabel 
+              value="KS" control={<Radio />} label="KS" 
+              onClick={() => {
+                dispatch(setStocks('KS'));
+              }}/>
+            <FormControlLabel value="disabled" disabled control={<Radio />} label="Other" />
+          </RadioGroup>
+        </FormControl>
+      </div>
       <div>
         <h2>List</h2>
       </div>
@@ -28,23 +60,20 @@ function StockList({stocks, selectStock}) {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
+              <TableCell>Company</TableCell>
               <TableCell align="right">Symbol</TableCell>
-              <TableCell align="right">Price</TableCell>
-              <TableCell align="right">Today</TableCell>
-              <TableCell align="right">Market Cap</TableCell>
+              
             </TableRow>
           </TableHead>
           <TableBody>
             {stocks.map((item) => (
-              <TableRow key={item.name} onClick={() => selectStock(item)}>
+              <TableRow key={item.description} onClick={() => {
+                dispatch();
+              }}>
                 <TableCell component="th" scope="row">
-                  {item.name}
+                  {item.description}
                 </TableCell>
                 <TableCell align="right">{item.symbol}</TableCell>
-                <TableCell align="right">{item.price}</TableCell>
-                <TableCell align="right">{item.today}</TableCell>
-                <TableCell align="right">{item.marketcap}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -54,13 +83,3 @@ function StockList({stocks, selectStock}) {
     
   );
 }
-
-const mapStateToProps = (state /*, ownProps*/) => {
-  return {
-    stocks: state.stocks
-  }
-}
-
-export default connect(
-  mapStateToProps, {selectStock}
-)(StockList)

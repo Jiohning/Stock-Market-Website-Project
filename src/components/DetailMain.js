@@ -14,7 +14,7 @@ function DetailMain({stock}) {
   const classes = useStyles();
 
   return(
-    <div>
+    <div className={classes.root}>
       <div>
         <Typography variant="h3" gutterBottom>
           {stock.name}
