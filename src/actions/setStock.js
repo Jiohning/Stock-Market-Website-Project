@@ -11,7 +11,7 @@ export function setStocks(code){
     }}).then(({data}) => {
       dispatch({
         type: 'SET_STOCKS',
-        payload: data
+        payload: data.slice(0,100)
       });
     });
   };

@@ -15,6 +15,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
 import { setStocks } from '../actions/setStock';
+import StockItem from './StockItem';
 
 const useStyles = makeStyles({
   table: {
@@ -24,8 +25,9 @@ const useStyles = makeStyles({
 
 export default function StockList() {
   const classes = useStyles();
-  const stocks = useSelector(state => state.stocks);
-  const [value, setValue] = useState('KS');
+  const statestocks = useSelector(state => state.stocks);
+  const stocks = statestocks[0];
+  const [value, setValue] = useState('US');
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
@@ -66,16 +68,11 @@ export default function StockList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {stocks.map((item) => (
-              <TableRow key={item.description} onClick={() => {
-                dispatch();
-              }}>
-                <TableCell component="th" scope="row">
-                  {item.description}
-                </TableCell>
-                <TableCell align="right">{item.symbol}</TableCell>
-              </TableRow>
+            
+            {stocks && stocks.map((item) => (
+              <StockItem key = {item.symbol} data = {item}></StockItem>
             ))}
+
           </TableBody>
         </Table>
       </TableContainer>
