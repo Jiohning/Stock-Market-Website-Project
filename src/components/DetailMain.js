@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles({
   root: {
@@ -10,8 +10,9 @@ const useStyles = makeStyles({
   },
 });
 
-function DetailMain({stock}) {
+export default function DetailMain() {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   return(
     <div className={classes.root}>
@@ -46,11 +47,3 @@ function DetailMain({stock}) {
     </div>
   );
 }
-
-const mapStateToProps = (state /*, ownProps*/) => {
-  return {
-    stock: state.selected
-  }
-}
-
-export default connect(mapStateToProps)(DetailMain)
