@@ -8,7 +8,7 @@ export default function Detail(){
   
   return(
     <div>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         <Grid item xs={8}>
           <DetailMain/>
         </Grid>

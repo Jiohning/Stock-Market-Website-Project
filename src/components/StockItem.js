@@ -7,7 +7,7 @@ export default class StockItem extends React.Component {
   super(props);
   this.state = { messages : [] };
   }
-
+  
   render() {
     const stock = this.props.data;
     return(

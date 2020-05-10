@@ -26,7 +26,8 @@ import StarBorder from '@material-ui/icons/StarBorder';
 
 
 import Search from './Search';
-import { setStocks } from '../actions/index';
+import setStocks from '../actions/setStocks';
+import { selectExchange } from '../actions/index';
 
 const drawerWidth = 240;
 
@@ -180,18 +181,27 @@ function TopNav() {
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
-            <ListItemText primary="Exchange" />
+            <ListItemText primary="EXCHANGE" />
             {openList ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="NEWS" />
           </ListItem>
           <Collapse in={openList} timeout="auto" unmountOnExit>
             {
               exchanges.map(item => (
-                <List key={item.code} component="div" disablePadding>
-                  <ListItem button className={classes.nested}>
+                <List key={item.name} component="div" disablePadding>
+                  <ListItem button className={classes.nested} onClick={handleDrawerClose}>
                     <ListItemIcon>
                       <StarBorder />
                     </ListItemIcon>
-                    <ListItemText primary={item.name} onClick={() => {dispatch(setStocks(item.code));}}/>
+                    <ListItemText primary={item.name} onClick={() => {
+                      dispatch(setStocks(item.code))
+                      dispatch(selectExchange(item.code))
+                    }}/>
                   </ListItem>
                 </List>))
             }

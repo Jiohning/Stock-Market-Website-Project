@@ -2,8 +2,8 @@ import React from 'react';
 import Container from '@material-ui/core/Container';
 
 import TopNav from './components/TopNav.js';
-import StockList from './components/StockList.js';
-//import StockDetail from './components/StockDetail.js';
+// import StockList from './components/StockList.js';
+import StockDetail from './components/StockDetail.js';
 import './App.css';
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     <div>
       <TopNav/>
       <Container>
-        <StockList/>
+        <StockDetail/>
       </Container>
     </div>
   );

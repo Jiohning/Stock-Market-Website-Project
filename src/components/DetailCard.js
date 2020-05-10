@@ -1,11 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import TextField from '@material-ui/core/TextField';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root_card: {
@@ -30,8 +29,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function DetailCard({stock}) {
+export default function DetailCard() {
   const classes = useStyles();
+  const stateStock = useSelector(state => state.stock);
+  const stock = stateStock[0];
+  const statePrice = useSelector(state => state.price);
+  const price = statePrice[0];
 
   return(
     <Card className={classes.root_card}>
@@ -42,21 +45,9 @@ function DetailCard({stock}) {
         <Divider/>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           Shares
-          |
-          <form className={classes.root} noValidate autoComplete="off">
-            <TextField
-              id="outlined-number"
-              label="Number"
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="outlined"
-            />
-          </form>
         </Typography>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Market Price {stock.price}
+          Market Price {price.c}
         </Typography>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           Commission US$0.00
@@ -72,13 +63,3 @@ function DetailCard({stock}) {
     </Card>
   );
 }
-
-const mapStateToProps = (state /*, ownProps*/) => {
-  return {
-    stock: state.selected
-  }
-}
-
-export default connect(
-  mapStateToProps
-)(DetailCard)

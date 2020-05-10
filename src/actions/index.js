@@ -1,8 +1,3 @@
-import axios from 'axios';
-
-const API_URL = 'https://finnhub.io/api/v1';
-const API_KEY = 'bqer03frh5rashj925lg';
-
 export function selectExchange(code){
   return (dispatch) => {
     dispatch({ 
@@ -11,21 +6,10 @@ export function selectExchange(code){
   };
 }
 
-export function setStocks(code){
+export function selectStock(item){
   return (dispatch) => {
-    axios.get(API_URL, '/stock/symbol', {params: {
-      exchange: code,
-      token: API_KEY
-    }}).then(({data}) => {
-      dispatch({
-        type: 'SET_STOCKS',
-        payload: data.slice(0,100)
-      });
+    dispatch({ 
+      type: 'SELECT_STOCK', payload: item
     });
   };
-}
-
-
-export function selectStock(){
-
 }
