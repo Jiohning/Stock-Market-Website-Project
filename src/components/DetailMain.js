@@ -51,7 +51,7 @@ export default function DetailMain() {
           News
         </Typography>
         {news && news.map((item) => (
-          <DetailNews key = {item.id} data = {item}></DetailNews>
+          <DetailNews key = {item.id} news = {item}></DetailNews>
         ))}
         
       </div>

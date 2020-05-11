@@ -132,6 +132,10 @@ function TopNav() {
     history.push("/list");
   }
 
+  const homeClick = () => {
+    history.push("/");
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -151,7 +155,8 @@ function TopNav() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography className={classes.title} variant="h6" noWrap
+            onClick={homeClick}>
             CHICKEN STOCK
           </Typography>
           

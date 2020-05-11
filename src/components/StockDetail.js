@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import DetailMain from './DetailMain.js';
-import DetailCard from './DetailCard.js'
+import DetailMain from './DetailMain';
+import DetailCard from './DetailCard';
 
 export default function Detail(){
   //stocklist > stockdetail > stockitem

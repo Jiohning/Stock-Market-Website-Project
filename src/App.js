@@ -4,6 +4,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import Container from '@material-ui/core/Container';
 
 import MainPage from './pages/MainPage';
 import ListPage from './pages/ListPage';
@@ -13,6 +14,7 @@ function App() {
   return (
     <Router>
       <div className="app">
+      <Container>
         <Switch>
           <Route path="/list">
             <ListPage />
@@ -24,6 +26,7 @@ function App() {
             <MainPage />
           </Route>
         </Switch>
+      </Container>
       </div>
     </Router>
   );

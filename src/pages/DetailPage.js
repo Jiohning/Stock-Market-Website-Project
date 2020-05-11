@@ -1,11 +1,12 @@
 import React from 'react';
 import TopNav from '../components/TopNav';
+import Detail from '../components/StockDetail';
 
 const DetailPage = () => {
   return(
     <>
       <TopNav/>
-      <div>DetailPage</div>
+      <Detail/>
     </>
   );
 }
