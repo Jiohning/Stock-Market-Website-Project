@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
 import { selectStock } from '../actions/index';
-import setPrice from '../actions/setPrice';
+import selectPrice from '../actions/selectPrice';
 import news from '../actions/news';
 
 
@@ -50,7 +50,7 @@ export default function StockItem ({item}) {
   return(
     <TableRow onClick = {() => {
       dispatch(selectStock(item))
-      dispatch(setPrice(item.symbol))
+      dispatch(selectPrice(item.symbol))
       dispatch(news(item.symbol, getFrom(), getTo()))
       pageClick()}}>
       <TableCell>{stock.description}</TableCell>

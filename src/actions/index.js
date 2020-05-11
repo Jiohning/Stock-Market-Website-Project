@@ -1,7 +1,7 @@
-export function selectExchange(code){
+export function selectExchange(item){
   return (dispatch) => {
     dispatch({ 
-      type: 'SELECT_EXCHANGE', payload: code
+      type: 'SELECT_EXCHANGE', payload: item
     });
   };
 }

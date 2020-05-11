@@ -1,17 +1,17 @@
 import axios from 'axios';
 
-const API_URL = 'https://finnhub.io/api/v1/quote';
+const API_URL = 'https://finnhub.io/api/v1/stock/symbol';
 const API_KEY = 'bqer03frh5rashj925lg';
 
-export default function setPrice(symbol){
+export default function getStocks(code){
   return (dispatch) => {
     axios.get(API_URL, {params: {
-      symbol: symbol,
+      exchange: code,
       token: API_KEY
     }}).then(({data}) => {
       dispatch({
-        type: 'SET_PRICE',
-        payload: data
+        type: 'GET_STOCKS',
+        payload: data.slice(0,100)
       });
     });
   };

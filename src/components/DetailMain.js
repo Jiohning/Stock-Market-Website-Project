@@ -2,7 +2,9 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
+
 import DetailNews from './DetailNews';
+import ChartComponent from './chart/index';
 
 const useStyles = makeStyles({
   root: {
@@ -13,10 +15,9 @@ const useStyles = makeStyles({
 
 export default function DetailMain() {
   const classes = useStyles();
-  const stateStock = useSelector(state => state.stock);
-  const stock = stateStock[0];
-  const statePrice = useSelector(state => state.price);
-  const price = statePrice[0];
+  const stock = useSelector(state => state.stock);
+  const price = useSelector(state => state.price);
+  const exchange = useSelector(state => state.exchange);
   const news = useSelector(state => state.news);
 
 
@@ -28,13 +29,14 @@ export default function DetailMain() {
           {stock.description}
         </Typography>
         <Typography variant="h4" gutterBottom>
-          {price.c}
+          {exchange.currency} {price.c}
         </Typography>
       </div>
       <div>
         <Typography variant="h1" gutterBottom>
-          CHART
+          차트
         </Typography>
+        <ChartComponent/>
       </div>
       <div>
         <Typography variant="h4" gutterBottom>

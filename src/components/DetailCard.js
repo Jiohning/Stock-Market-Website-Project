@@ -5,6 +5,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { useSelector } from 'react-redux';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import TextField from '@material-ui/core/TextField';
+
 
 const useStyles = makeStyles((theme) => ({
   root_card: {
@@ -31,10 +36,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DetailCard() {
   const classes = useStyles();
-  const stateStock = useSelector(state => state.stock);
-  const stock = stateStock[0];
-  const statePrice = useSelector(state => state.price);
-  const price = statePrice[0];
+  const stock = useSelector(state => state.stock);
+  const price = useSelector(state => state.price);
+  const exchange = useSelector(state => state.exchange);
 
   return(
     <Card className={classes.root_card}>
@@ -43,7 +47,23 @@ export default function DetailCard() {
           Buy {stock.symbol}
         </Typography>
         <Divider/>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
+        <div>
+          <List component="nav" aria-label="main mailbox folders">
+            <ListItem>
+              <ListItemText primary="Shares" />
+              <form className={classes.root} noValidate autoComplete="off">
+                <TextField id="outlined-basic" label="only number" variant="outlined" />
+              </form>
+            </ListItem>
+            <ListItem>
+              <ListItemText primary="Market Price" /> {exchange.currency} {price.c}
+            </ListItem>
+            <ListItem>
+              <ListItemText primary="Commision" /> {exchange.currency} 0.00
+            </ListItem>
+          </List>
+        </div>
+        {/* <Typography className={classes.title} color="textSecondary" gutterBottom>
           Shares
         </Typography>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -51,7 +71,7 @@ export default function DetailCard() {
         </Typography>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           Commission US$0.00
-        </Typography>
+        </Typography> */}
         <Divider/>
         <Typography variant="h6" component="h2">
           Estimated Cost 

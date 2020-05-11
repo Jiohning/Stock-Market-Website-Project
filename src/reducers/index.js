@@ -334,9 +334,10 @@ const initialState = {
     }
   ],
   stocks: [],
+  priceList: [],
   exchange: null,
-  stock: [],
-  price: [],
+  stock: null,
+  price: null,
   news: [],
   term: null,
 };
@@ -346,14 +347,17 @@ const reducer = produce((state, action) => {
     case 'SELECT_EXCHANGE':
       state.exchange = action.payload;
       break;
-    case 'SET_STOCKS':
+    case 'GET_STOCKS':
       state.stocks.push(action.payload);
       break;
     case 'SELECT_STOCK':
-      state.stock.push(action.payload);
+      state.stock = action.payload;
       break;
-    case 'SET_PRICE':
-        state.price.push(action.payload);
+    case 'GET_PRICE':
+        state.priceList.push(action.payload);
+        break;
+    case 'SELETE_PRICE':
+        state.price = action.payload;
         break;
     case 'NEWS':
         state.news = action.payload;

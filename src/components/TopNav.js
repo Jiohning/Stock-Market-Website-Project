@@ -27,7 +27,7 @@ import { useHistory } from "react-router-dom";
 
 
 import Search from './Search';
-import setStocks from '../actions/setStocks';
+import getStocks from '../actions/getStocks';
 import { selectExchange } from '../actions/index';
 
 const drawerWidth = 240;
@@ -210,8 +210,8 @@ function TopNav() {
                     </ListItemIcon>
                     <ListItemText primary={item.name} onClick={() => {
                       pageClick()
-                      dispatch(setStocks(item.code))
-                      dispatch(selectExchange(item.code))}}/>
+                      dispatch(getStocks(item.code))
+                      dispatch(selectExchange(item))}}/>
                   </ListItem>
                 </List>))
             }
