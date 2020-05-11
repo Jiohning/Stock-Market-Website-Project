@@ -23,6 +23,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
+import { useHistory } from "react-router-dom";
 
 
 import Search from './Search';
@@ -112,6 +113,7 @@ function TopNav() {
   const [openList, setOpenList] = React.useState(false);
   const dispatch = useDispatch();
   const exchanges = useSelector(state => state.exchanges);
+  const history = useHistory();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -126,6 +128,9 @@ function TopNav() {
     setOpenList(!openList);
   };
 
+  const pageClick = () => {
+    history.push("/list");
+  }
 
   return (
     <div className={classes.root}>
@@ -199,9 +204,9 @@ function TopNav() {
                       <StarBorder />
                     </ListItemIcon>
                     <ListItemText primary={item.name} onClick={() => {
+                      pageClick()
                       dispatch(setStocks(item.code))
-                      dispatch(selectExchange(item.code))
-                    }}/>
+                      dispatch(selectExchange(item.code))}}/>
                   </ListItem>
                 </List>))
             }

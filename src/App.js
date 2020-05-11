@@ -1,19 +1,31 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
-import TopNav from './components/TopNav.js';
-// import StockList from './components/StockList.js';
-import StockDetail from './components/StockDetail.js';
-import './App.css';
+import MainPage from './pages/MainPage';
+import ListPage from './pages/ListPage';
+import DetailPage from './pages/DetailPage';
 
 function App() {
   return (
-    <div>
-      <TopNav/>
-      <Container>
-        <StockDetail/>
-      </Container>
-    </div>
+    <Router>
+      <div className="app">
+        <Switch>
+          <Route path="/list">
+            <ListPage />
+          </Route>
+          <Route path="/detail">
+            <DetailPage />
+          </Route>
+          <Route path="/">
+            <MainPage />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
