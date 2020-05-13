@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 
 import { selectStock } from '../actions/index';
 import { selectPrice } from '../actions/price';
-import news from '../actions/news';
+import getCompanyNews from '../actions/getCompanyNews';
 import candle from '../actions/getCandle';
 
 
@@ -63,7 +63,7 @@ export default function StockItem({item}) {
     <TableRow onClick = {() => {
       dispatch(selectPrice(item.symbol))
       dispatch(selectStock(item))
-      dispatch(news(item.symbol, getFrom(), getTo()))
+      dispatch(getCompanyNews(item.symbol, getFrom(), getTo()))
       dispatch(candle(item.symbol, time()-86400, time()))
       pageClick()}}>
       <TableCell>{stock.description}</TableCell>

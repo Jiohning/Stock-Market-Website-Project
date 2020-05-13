@@ -7,10 +7,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import StockItem from './StockItem';
-import { getPrice } from '../actions/price';
 
 
 const useStyles = makeStyles({
@@ -21,7 +20,6 @@ const useStyles = makeStyles({
 
 export default function StockList() {
   const classes = useStyles();
-  const dispatch = useDispatch();
 
   const stocks = useSelector(state => state.stocks);
   const exchange = useSelector(state => state.exchange);

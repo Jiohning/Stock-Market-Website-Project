@@ -1,20 +1,18 @@
 import axios from 'axios';
 
-const API_URL = 'https://finnhub.io/api/v1/company-news';
+const API_URL = 'https://finnhub.io/api/v1/news';
 const API_KEY = 'bqer03frh5rashj925lg';
 
 
-export default function news(symbol, from, to){
+export default function getCompanyNews(){
   return (dispatch) => {
 
     axios.get(API_URL, {params: {
-      symbol: symbol,
-      from: from,
-      to: to,
+      category: 'general',
       token: API_KEY
     }}).then(({data}) => {
       dispatch({
-        type: 'NEWS',
+        type: 'GET_GENERAL_NEWS',
         payload: data
       });
     });

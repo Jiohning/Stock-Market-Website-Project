@@ -334,11 +334,12 @@ const initialState = {
     }
   ],
   stocks: null,
+  generalNews: null,
   priceList: null,
   exchange: null,
   stock: null,
   price: null,
-  news: null,
+  companyNews: null,
   candleData: null,
   term: null,
   loading: false,
@@ -361,8 +362,11 @@ const reducer = produce((state, action) => {
     case 'SELETE_PRICE':
         state.price = action.payload;
         break;
-    case 'NEWS':
-        state.news = action.payload;
+    case 'GET_GENERAL_NEWS':
+        state.generalNews = action.payload;
+        break;
+    case 'GET_COMPANY_NEWS':
+        state.companyNews = action.payload;
         break;
     case 'GET_CANDLE':
         state.candleData = action.payload;

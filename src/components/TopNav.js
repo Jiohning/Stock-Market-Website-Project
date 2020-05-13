@@ -19,16 +19,18 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import { useHistory } from "react-router-dom";
+import AnnouncementIcon from '@material-ui/icons/Announcement';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 
 import Search from './Search';
 import getStocks from '../actions/getStocks';
 import { selectExchange } from '../actions/index';
+import getGeneralNews from '../actions/getGeneralNews';
 
 const drawerWidth = 240;
 
@@ -128,12 +130,17 @@ function TopNav() {
     setOpenList(!openList);
   };
 
-  const pageClick = () => {
+  const listClick = () => {
     history.push("/list");
   }
 
   const homeClick = () => {
     history.push("/");
+  }
+  const newsClick= () => {
+    setTimeout(() => {
+      history.push("/news");
+    }, 3000);
   }
 
   return (
@@ -177,7 +184,9 @@ function TopNav() {
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
+
         <Divider />
+
         <List
           component="nav"
           aria-labelledby="nested-list-subheader"
@@ -189,16 +198,10 @@ function TopNav() {
         >
           <ListItem button onClick={handleClick}>
             <ListItemIcon>
-              <InboxIcon />
+              <AttachMoneyIcon />
             </ListItemIcon>
             <ListItemText primary="EXCHANGE" />
             {openList ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="NEWS" />
           </ListItem>
           <Collapse in={openList} timeout="auto" unmountOnExit>
             {
@@ -209,7 +212,7 @@ function TopNav() {
                       <StarBorder />
                     </ListItemIcon>
                     <ListItemText primary={item.name} onClick={() => {
-                      pageClick()
+                      listClick()
                       dispatch(getStocks(item.code))
                       dispatch(selectExchange(item))}}/>
                   </ListItem>
@@ -217,6 +220,14 @@ function TopNav() {
             }
             
           </Collapse>
+          <ListItem button onClick={() => {
+            newsClick()
+            dispatch(getGeneralNews())}}>
+            <ListItemIcon>
+              <AnnouncementIcon />
+            </ListItemIcon>
+            <ListItemText primary="NEWS"/>
+          </ListItem>
         </List>
       </Drawer>
       <main

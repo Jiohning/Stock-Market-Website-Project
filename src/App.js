@@ -9,6 +9,7 @@ import Container from '@material-ui/core/Container';
 import MainPage from './pages/MainPage';
 import ListPage from './pages/ListPage';
 import DetailPage from './pages/DetailPage';
+import NewsPage from './pages/NewsPage';
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
           </Route>
           <Route path="/detail">
             <DetailPage />
+          </Route>
+          <Route path="/news">
+            <NewsPage />
           </Route>
           <Route path="/">
             <MainPage />
