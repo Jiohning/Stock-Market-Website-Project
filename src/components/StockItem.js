@@ -1,19 +1,21 @@
 import React from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
 import { selectStock } from '../actions/index';
-import selectPrice from '../actions/selectPrice';
+import { selectPrice } from '../actions/price';
 import news from '../actions/news';
+import candle from '../actions/getCandle';
 
 
 
-export default function StockItem ({item}) {
+export default function StockItem({item}) {
   const stock = item;
   const dispatch = useDispatch();
   const history = useHistory();
+  const loading = useSelector(state => state.loading);
 
   const getTo = () => {
     var today = new Date();
@@ -42,16 +44,27 @@ export default function StockItem ({item}) {
   }
 
   const pageClick = () => {
-    setTimeout(() => {
-      history.push("/detail");
-    }, 1000);
+    if(loading){
+      pageClick();
+    }
+    else{
+      setTimeout(() => {
+        history.push("/detail");
+      }, 2000);
+    }
+  }
+
+  const time = () => {
+    var today = Math.floor(new Date()/1000);
+    return(today);
   }
 
   return(
     <TableRow onClick = {() => {
-      dispatch(selectStock(item))
       dispatch(selectPrice(item.symbol))
+      dispatch(selectStock(item))
       dispatch(news(item.symbol, getFrom(), getTo()))
+      dispatch(candle(item.symbol, time()-86400, time()))
       pageClick()}}>
       <TableCell>{stock.description}</TableCell>
       <TableCell align="right">{stock.symbol}</TableCell>

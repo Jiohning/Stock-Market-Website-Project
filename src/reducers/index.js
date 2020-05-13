@@ -333,13 +333,15 @@ const initialState = {
         "name": "Vietnam exchanges including HOSE, HNX and UPCOM"
     }
   ],
-  stocks: [],
-  priceList: [],
+  stocks: null,
+  priceList: null,
   exchange: null,
   stock: null,
   price: null,
-  news: [],
+  news: null,
+  candleData: null,
   term: null,
+  loading: false,
 };
 const reducer = produce((state, action) => {
   console.log(action);
@@ -348,13 +350,13 @@ const reducer = produce((state, action) => {
       state.exchange = action.payload;
       break;
     case 'GET_STOCKS':
-      state.stocks.push(action.payload);
+      state.stocks = action.payload;
       break;
     case 'SELECT_STOCK':
       state.stock = action.payload;
       break;
     case 'GET_PRICE':
-        state.priceList.push(action.payload);
+        state.priceList = action.payload;
         break;
     case 'SELETE_PRICE':
         state.price = action.payload;
@@ -362,8 +364,17 @@ const reducer = produce((state, action) => {
     case 'NEWS':
         state.news = action.payload;
         break;
+    case 'GET_CANDLE':
+        state.candleData = action.payload;
+        break;
     case 'SEARCH':
       state.term = action.payload;
+      break;
+    case 'START_LOADING':
+      state.loading = true;
+      break;
+    case 'END_LOADING':
+      state.loading = false;
       break;
     default:
       break;

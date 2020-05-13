@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 
 import DetailNews from './DetailNews';
-import ChartComponent from './chart/index';
+import CandleChart from './CandleChart';
 
 const useStyles = makeStyles({
   root: {
@@ -14,11 +14,14 @@ const useStyles = makeStyles({
 });
 
 export default function DetailMain() {
+
   const classes = useStyles();
   const stock = useSelector(state => state.stock);
   const price = useSelector(state => state.price);
   const exchange = useSelector(state => state.exchange);
   const news = useSelector(state => state.news);
+  const candleData = useSelector(state => state.candleData);
+  const loading = useSelector(state => state.loading);
 
 
   return(
@@ -33,10 +36,16 @@ export default function DetailMain() {
         </Typography>
       </div>
       <div>
-        <Typography variant="h1" gutterBottom>
-          차트
-        </Typography>
-        <ChartComponent/>
+        {
+          candleData.s === "ok" && <CandleChart data = {candleData} loading = {loading}/>
+        }
+        {
+          candleData.s !== "ok" && 
+          <Typography variant="h1" gutterBottom>
+            No Data
+          </Typography>
+        }
+
       </div>
       <div>
         <Typography variant="h4" gutterBottom>

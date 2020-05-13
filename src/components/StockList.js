@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import { useSelector, useDispatch } from 'react-redux';
 
 import StockItem from './StockItem';
-import getPrice from '../actions/getPrice';
+import { getPrice } from '../actions/price';
 
 
 const useStyles = makeStyles({
@@ -23,8 +23,7 @@ export default function StockList() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const statestocks = useSelector(state => state.stocks);
-  const stocks = statestocks[0];
+  const stocks = useSelector(state => state.stocks);
   const exchange = useSelector(state => state.exchange);
   
 
@@ -45,8 +44,7 @@ export default function StockList() {
           <TableBody>
             
             {stocks && stocks.map((item) => (
-              <StockItem key = {item.symbol} item={item} />
-            ))}
+              <StockItem key = {item.symbol} item={item} />))}
 
           </TableBody>
         </Table>
