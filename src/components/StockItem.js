@@ -15,7 +15,7 @@ export default function StockItem({item}) {
   const stock = item;
   const dispatch = useDispatch();
   const history = useHistory();
-  const loading = useSelector(state => state.loading);
+  const price = useSelector(state => state.price);
 
   const getTo = () => {
     var today = new Date();
@@ -44,7 +44,7 @@ export default function StockItem({item}) {
   }
 
   const pageClick = () => {
-    if(loading){
+    if(!price){
       pageClick();
     }
     else{

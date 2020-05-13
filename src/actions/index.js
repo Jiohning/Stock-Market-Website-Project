@@ -14,3 +14,11 @@ export function selectStock(item){
     });
   };
 }
+
+export function search(term){
+  return(dispatch) => {
+    dispatch({
+      type: 'SERACH', payload: term
+    });
+  }
+}

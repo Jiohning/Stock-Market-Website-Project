@@ -26,7 +26,6 @@ import { useHistory } from "react-router-dom";
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
-
 import Search from './Search';
 import getStocks from '../actions/getStocks';
 import { selectExchange } from '../actions/index';
@@ -166,7 +165,6 @@ function TopNav() {
             onClick={homeClick}>
             CHICKEN STOCK
           </Typography>
-          
           <Search/>
         </Toolbar>
       </AppBar>
@@ -203,6 +201,7 @@ function TopNav() {
             <ListItemText primary="EXCHANGE" />
             {openList ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
+
           <Collapse in={openList} timeout="auto" unmountOnExit>
             {
               exchanges.map(item => (
@@ -218,8 +217,8 @@ function TopNav() {
                   </ListItem>
                 </List>))
             }
-            
           </Collapse>
+
           <ListItem button onClick={() => {
             newsClick()
             dispatch(getGeneralNews())}}>

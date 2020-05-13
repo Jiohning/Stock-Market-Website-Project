@@ -1,81 +1,78 @@
+/* eslint-disable no-use-before-define */
 import React from 'react';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useDispatch, useSelector } from 'react-redux';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { useHistory } from "react-router-dom";
 
-// import selectStock from '../actions/selectStock';
+import { selectStock } from '../actions/index';
+import { selectPrice } from '../actions/price';
+import getCompanyNews from '../actions/getCompanyNews';
+import candle from '../actions/getCandle';
 
-
-const useStyles = makeStyles((theme) => ({
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
-  }
-}));
-
-export default function Search(){
-  const classes = useStyles();
-  const term = useSelector(state => state.term);
+export default function Search() {
+  const stocks = useSelector(state => state.stocks);
   const dispatch = useDispatch();
+  const history = useHistory();
+  const loading = useSelector(state => state.loading);
 
-  return(
+  const getTo = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+
+    return(
+      today
+    );
+  }
+
+  const getFrom = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth()).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    if(mm === 0) {
+      mm = 12;
+    }
+    today = yyyy + '-' + mm + '-' + dd;
+    return(
+      today
+    );
+  }
+
+  const pageClick = () => {
+    if(loading){
+      pageClick();
+    }
+    else{
+      setTimeout(() => {
+        history.push("/detail");
+      }, 2000);
+    }
+  }
+
+  const time = () => {
+    var today = Math.floor(new Date()/1000);
+    return(today);
+  }
+
+  return (
+    <Autocomplete
+      id="combo-box-demo"
+      options={stocks}
+      getOptionLabel={(option) => option.description}
+      style={{ width: 300 }}
+      renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+      onChange={(event, value) => {
+        dispatch(selectPrice(value.symbol))
+        dispatch(selectStock(value))
+        dispatch(getCompanyNews(value.symbol, getFrom(), getTo()))
+        dispatch(candle(value.symbol, time()-86400, time()))
+        pageClick()
+      }}
+    />
     
-    <div className={classes.search} >
-      <div className={classes.searchIcon}>
-        <SearchIcon />
-      </div>
-      <InputBase
-        placeholder="Search"
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput,
-        }}
-        inputProps={{ 'aria-label': 'search' }}
-        value={term}
-        
-        onKeyDown={(event) => {
-          if(event.key === 'Enter') {
-            dispatch()
-          }}}
-        />
-    </div>
-      
   );
-  
 }
