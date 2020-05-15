@@ -5,7 +5,6 @@ const API_KEY = 'bqer03frh5rashj925lg';
 
 export default function getCandle(symbol, from, to){
   return (dispatch) => {
-    dispatch({type:'END_LOADING'});
     axios.get(API_URL, {params: {
       symbol: symbol,
       resolution: 1,

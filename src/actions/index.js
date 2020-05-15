@@ -8,17 +8,20 @@ export function selectExchange(item){
 
 export function selectStock(item){
   return (dispatch) => {
-    dispatch({type:'START_LOADING'});
     dispatch({ 
       type: 'SELECT_STOCK', payload: item
     });
   };
 }
 
-export function search(term){
+export function startLoading() {
   return(dispatch) => {
-    dispatch({
-      type: 'SERACH', payload: term
-    });
+    dispatch({type:'START_LOADING'});
+  }
+}
+
+export function endLoading() {
+  return(dispatch) => {
+    dispatch({type:'END_LOADING'});
   }
 }

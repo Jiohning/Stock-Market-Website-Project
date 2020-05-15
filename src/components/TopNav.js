@@ -25,11 +25,13 @@ import StarBorder from '@material-ui/icons/StarBorder';
 import { useHistory } from "react-router-dom";
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Search from './Search';
 import getStocks from '../actions/getStocks';
-import { selectExchange } from '../actions/index';
+import { selectExchange, startLoading } from '../actions/index';
 import getGeneralNews from '../actions/getGeneralNews';
+
 
 const drawerWidth = 240;
 
@@ -115,6 +117,8 @@ function TopNav() {
   const dispatch = useDispatch();
   const exchanges = useSelector(state => state.exchanges);
   const history = useHistory();
+  const exchange = useSelector(state => state.exchange);
+  const loading = useSelector(state => state.loading);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -130,7 +134,9 @@ function TopNav() {
   };
 
   const listClick = () => {
-    history.push("/list");
+    setTimeout(() => {
+      history.push("/list");
+    }, 2000);
   }
 
   const homeClick = () => {
@@ -139,7 +145,7 @@ function TopNav() {
   const newsClick= () => {
     setTimeout(() => {
       history.push("/news");
-    }, 3000);
+    }, 2000);
   }
 
   return (
@@ -150,6 +156,7 @@ function TopNav() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
+        style={{ background: 'transparent' , backgroundColor: '#00695f'}}
       >
         <Toolbar>
           <IconButton
@@ -161,13 +168,33 @@ function TopNav() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap
-            onClick={homeClick}>
-            CHICKEN STOCK
-          </Typography>
-          <Search/>
+          {loading && 
+            <>
+              <Typography className={classes.title} variant="overline" noWrap
+                onClick={homeClick}>
+                FASTOCK 
+              </Typography>
+              {exchange !== null && <Search/>}
+              <CircularProgress color="secondary" />
+            </>
+            
+          }
+          {!loading && 
+            <>
+            <Typography className={classes.title} variant="overline" noWrap
+              onClick={homeClick}>
+              FASTOCK 
+            </Typography>
+            {exchange !== null && <Search/>}
+          </>
+          }
+          
+
+          
+
         </Toolbar>
       </AppBar>
+
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -211,17 +238,19 @@ function TopNav() {
                       <StarBorder />
                     </ListItemIcon>
                     <ListItemText primary={item.name} onClick={() => {
-                      listClick()
+                      dispatch(startLoading())
                       dispatch(getStocks(item.code))
-                      dispatch(selectExchange(item))}}/>
+                      dispatch(selectExchange(item))
+                      listClick()
+                    }}/>
                   </ListItem>
                 </List>))
             }
           </Collapse>
 
           <ListItem button onClick={() => {
-            newsClick()
-            dispatch(getGeneralNews())}}>
+            dispatch(getGeneralNews())
+            newsClick()}}>
             <ListItemIcon>
               <AnnouncementIcon />
             </ListItemIcon>

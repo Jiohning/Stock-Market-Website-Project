@@ -10,7 +10,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 
-
 const useStyles = makeStyles((theme) => ({
   root_card: {
     minWidth: 275,
@@ -39,47 +38,61 @@ export default function DetailCard() {
   const stock = useSelector(state => state.stock);
   const price = useSelector(state => state.price);
   const exchange = useSelector(state => state.exchange);
+  const loading = useSelector(state => state.loading);
+
+  const [value, setValue] = React.useState('');
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+
+  const calculator = () => {
+    return(
+      value * price.c
+    );
+  };
 
   return(
-    <Card className={classes.root_card}>
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          Buy {stock.symbol}
-        </Typography>
-        <Divider/>
-        <div>
-          <List component="nav" aria-label="main mailbox folders">
-            <ListItem>
-              <ListItemText primary="Shares" />
-              <form className={classes.root} noValidate autoComplete="off">
-                <TextField id="outlined-basic" label="only number" variant="outlined" />
-              </form>
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Market Price" /> {exchange.currency} {price.c}
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Commision" /> {exchange.currency} 0.00
-            </ListItem>
-          </List>
-        </div>
-        {/* <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Shares
-        </Typography>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Market Price {price.c}
-        </Typography>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Commission US$0.00
-        </Typography> */}
-        <Divider/>
-        <Typography variant="h6" component="h2">
-          Estimated Cost 
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          If you want to buy {stock.symbol}, we recommend securities company.
-        </Typography>
-      </CardContent>
-    </Card>
+    <>
+      {!loading && 
+        <Card className={classes.root_card}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              Buy {stock.symbol}
+            </Typography>
+            <Divider/>
+            <div>
+              <List component="nav" aria-label="main mailbox folders">
+                <ListItem>
+                  <ListItemText primary="Shares" />
+                  <form className={classes.root} noValidate autoComplete="off">
+                    <TextField id="outlined-basic" label="only number" variant="outlined" 
+                      value={value}
+                      onChange={handleChange}/>
+                  </form>
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Market Price" /> {exchange.currency} {price.c}
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Commision" /> {exchange.currency} 0.00
+                </ListItem>
+              </List>
+            </div>
+            
+            <Divider/>
+
+            <Typography variant="h6" component="h2">
+              Estimated Cost {exchange.currency} {calculator()}
+            </Typography>
+            <Typography className={classes.pos} color="textSecondary">
+              If you want to buy {stock.symbol}, we recommend securities company.
+            </Typography>
+          </CardContent>
+        </Card>
+      }
+    </>
+    
   );
 }

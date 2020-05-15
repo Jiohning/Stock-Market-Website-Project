@@ -7,6 +7,7 @@ export default class CandleChart extends React.Component {
     this.state = {
       series: [{
         data: null}],
+
       options: {
         chart: {
           type: 'candlestick',
@@ -26,6 +27,7 @@ export default class CandleChart extends React.Component {
         }
       },
     };
+    this.setData();
   }
 
   setData() {
@@ -45,15 +47,9 @@ export default class CandleChart extends React.Component {
     this.setState(stateCopy);
   }
 
-  componentWillMount() {
-    this.setData();
-  }
-
   render() {
-
     return (
       <div id="chart">
-        {console.log(this.state.series)}
         <ApexCharts options={this.state.options} series={this.state.series} type="candlestick" height={350}/>
       </div>
     );

@@ -9,12 +9,14 @@ import { selectStock } from '../actions/index';
 import { selectPrice } from '../actions/price';
 import getCompanyNews from '../actions/getCompanyNews';
 import candle from '../actions/getCandle';
+import { startLoading } from '../actions/index';
+import getAbout from '../actions/getAbout';
 
 export default function Search() {
   const stocks = useSelector(state => state.stocks);
+  const exchange = useSelector(state => state.exchange);
   const dispatch = useDispatch();
   const history = useHistory();
-  const loading = useSelector(state => state.loading);
 
   const getTo = () => {
     var today = new Date();
@@ -42,15 +44,10 @@ export default function Search() {
     );
   }
 
-  const pageClick = () => {
-    if(loading){
-      pageClick();
-    }
-    else{
-      setTimeout(() => {
-        history.push("/detail");
-      }, 2000);
-    }
+  const pageClick = (id) => {
+    setTimeout(() => {
+      history.push(`/detail/${id}`);
+    }, 2000);
   }
 
   const time = () => {
@@ -59,20 +56,27 @@ export default function Search() {
   }
 
   return (
-    <Autocomplete
-      id="combo-box-demo"
-      options={stocks}
-      getOptionLabel={(option) => option.description}
-      style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
-      onChange={(event, value) => {
-        dispatch(selectPrice(value.symbol))
-        dispatch(selectStock(value))
-        dispatch(getCompanyNews(value.symbol, getFrom(), getTo()))
-        dispatch(candle(value.symbol, time()-86400, time()))
-        pageClick()
-      }}
-    />
+    <>
+      {exchange === null && <></>}
+      {exchange !== null && 
+        <Autocomplete
+          id="combo-box-demo"
+          options={stocks}
+          getOptionLabel={(option) => option.description}
+          style={{ width: 500 }}
+          renderInput={(params) => <TextField {...params} label="SEARCH" variant="outlined" />}
+          onChange={(event, value) => {
+            dispatch(startLoading())
+            dispatch(selectPrice(value.symbol))
+            dispatch(selectStock(value))
+            dispatch(getCompanyNews(value.symbol, getFrom(), getTo()))
+            dispatch(candle(value.symbol, time()-86400, time()))
+            dispatch(getAbout(value.symbol))
+            pageClick(value.description)
+          }}
+        />
+      }
+    </>
     
   );
 }

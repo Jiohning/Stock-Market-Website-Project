@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { selectStock } from '../actions/index';
 import { selectPrice } from '../actions/price';
 import getCompanyNews from '../actions/getCompanyNews';
 import candle from '../actions/getCandle';
+import { startLoading, endLoading } from '../actions/index';
+import getAbout from '../actions/getAbout';
 
 
 
@@ -15,7 +18,7 @@ export default function StockItem({item}) {
   const stock = item;
   const dispatch = useDispatch();
   const history = useHistory();
-  const price = useSelector(state => state.price);
+  const loading = useSelector(state => state.loading);
 
   const getTo = () => {
     var today = new Date();
@@ -43,15 +46,10 @@ export default function StockItem({item}) {
     );
   }
 
-  const pageClick = () => {
-    if(!price){
-      pageClick();
-    }
-    else{
-      setTimeout(() => {
-        history.push("/detail");
-      }, 2000);
-    }
+  const pageClick = (id) => {
+    setTimeout(() => {
+      history.push(`/detail/${id}`);
+    }, 2000);
   }
 
   const time = () => {
@@ -60,14 +58,21 @@ export default function StockItem({item}) {
   }
 
   return(
-    <TableRow onClick = {() => {
-      dispatch(selectPrice(item.symbol))
-      dispatch(selectStock(item))
-      dispatch(getCompanyNews(item.symbol, getFrom(), getTo()))
-      dispatch(candle(item.symbol, time()-86400, time()))
-      pageClick()}}>
-      <TableCell>{stock.description}</TableCell>
-      <TableCell align="right">{stock.symbol}</TableCell>
-    </TableRow>
+    <>
+      {!loading &&
+        <TableRow onClick = {() => {
+          dispatch(startLoading())
+          dispatch(selectPrice(item.symbol))
+          dispatch(selectStock(item))
+          dispatch(getCompanyNews(item.symbol, getFrom(), getTo()))
+          dispatch(candle(item.symbol, time()-86400, time()))
+          dispatch(getAbout(item.symbol))
+          pageClick(item.description)}}>  
+          <TableCell padding="checkbox"/>
+          <TableCell>{stock.description}</TableCell>
+          <TableCell align="right">{stock.symbol}</TableCell>
+        </TableRow>
+      }
+    </>
   );
 }

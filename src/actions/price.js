@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_URL = 'https://finnhub.io/api/v1/quote';
 const API_KEY = 'bqer03frh5rashj925lg';
 
-export function getPrice(symbol){
+export function getPrice(symbol, name){
   return (dispatch) => {
     axios.get(API_URL, {params: {
       symbol: symbol,
@@ -27,6 +27,7 @@ export function selectPrice(symbol){
         type: 'SELETE_PRICE',
         payload: data
       });
+      dispatch({type: 'END_LOADING'});
     });
   };
 }
