@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
     flex: '1 0 auto',
   },
   cover: {
-    width: 151,
+    width: '20%',
   },
   alert: {
     marginTop: '10px'
@@ -40,15 +40,18 @@ export default function DetailAbout() {
       }
       {about.name && 
         <Card className={classes.root}>
+          <CardMedia
+            className={classes.cover}
+            image={about.logo}
+            title="Company Logo"
+          />
           <div className={classes.details}>
-            <CardMedia
-              className={classes.cover}
-              image={about.logo}
-              title="Live from space album cover"/>
-            
             <CardContent className={classes.content}>
               <Typography component="h5" variant="h5">
                 {about.name}
+              </Typography>
+              <Typography variant="subtitle1" color="textSecondary">
+                {about.finnhubIndustry}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
                 {about.weburl}

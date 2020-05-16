@@ -1,16 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
-import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { selectStock } from '../actions/index';
-import { selectPrice } from '../actions/price';
-import getCompanyNews from '../actions/getCompanyNews';
-import candle from '../actions/getCandle';
-import { startLoading, endLoading } from '../actions/index';
-import getAbout from '../actions/getAbout';
+import { selectStock, startLoading, recommend, getAbout, getCandle, getCompanyNews, selectPrice } from '../actions/index';
 
 
 
@@ -47,9 +41,10 @@ export default function StockItem({item}) {
   }
 
   const pageClick = (id) => {
+    while(loading){return;}
     setTimeout(() => {
       history.push(`/detail/${id}`);
-    }, 2000);
+    }, 3000);
   }
 
   const time = () => {
@@ -65,7 +60,8 @@ export default function StockItem({item}) {
           dispatch(selectPrice(item.symbol))
           dispatch(selectStock(item))
           dispatch(getCompanyNews(item.symbol, getFrom(), getTo()))
-          dispatch(candle(item.symbol, time()-86400, time()))
+          dispatch(getCandle(item.symbol, time()-86400, time()))
+          dispatch(recommend(item.symbol))
           dispatch(getAbout(item.symbol))
           pageClick(item.description)}}>  
           <TableCell padding="checkbox"/>

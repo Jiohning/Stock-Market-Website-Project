@@ -343,7 +343,10 @@ const initialState = {
   candleData: null,
   about: null,
   loading: false,
+  recommendation: [],
+  error: [],
 };
+
 const reducer = produce((state, action) => {
   console.log(action);
   switch(action.type) {
@@ -373,6 +376,12 @@ const reducer = produce((state, action) => {
         break;
     case 'GET_ABOUT':
         state.about = action.payload;
+        break;
+    case 'GET_RECOMMENDATION':
+        state.recommendation = action.payload;
+        break;
+    case 'ERROR':
+        state.error = action.payload;
         break;
     case 'START_LOADING':
       state.loading = true;

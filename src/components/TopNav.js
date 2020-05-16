@@ -28,9 +28,7 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Search from './Search';
-import getStocks from '../actions/getStocks';
-import { selectExchange, startLoading } from '../actions/index';
-import getGeneralNews from '../actions/getGeneralNews';
+import { selectExchange, startLoading, getStocks, getGeneralNews } from '../actions/index';
 
 
 const drawerWidth = 240;
@@ -133,15 +131,16 @@ function TopNav() {
     setOpenList(!openList);
   };
 
-  const listClick = () => {
+  const listClick = (loading) => {
     setTimeout(() => {
       history.push("/list");
-    }, 2000);
+    }, 3000);
   }
 
   const homeClick = () => {
     history.push("/");
   }
+
   const newsClick= () => {
     setTimeout(() => {
       history.push("/news");

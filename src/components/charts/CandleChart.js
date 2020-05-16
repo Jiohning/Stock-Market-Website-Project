@@ -6,7 +6,8 @@ export default class CandleChart extends React.Component {
     super(props);
     this.state = {
       series: [{
-        data: null}],
+        data: null
+        }],
 
       options: {
         chart: {
@@ -27,10 +28,14 @@ export default class CandleChart extends React.Component {
         }
       },
     };
+
+  }
+
+  componentWillMount(){
     this.setData();
   }
 
-  setData() {
+  setData(){
     const candleData = this.props.data;
     let i = 0;
     let list = null;

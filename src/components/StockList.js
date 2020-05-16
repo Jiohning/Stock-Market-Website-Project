@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -17,8 +17,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import { useSelector, useDispatch } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { useSelector } from 'react-redux';
+
 
 import StockItem from './StockItem';
 
@@ -118,13 +118,14 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-const EnhancedTableToolbar = (props, data) => {
+const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
+  const exchange = useSelector(state => state.exchange);
 
   return (
     <Toolbar className={classes.root}>
       <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-        {data.name} List
+        {exchange.name} List
       </Typography>
 
       <Tooltip title="Filter list">
@@ -168,7 +169,6 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const exchange = useSelector(state => state.exchange);
   const stocks = useSelector(state => state.stocks);
   const loading = useSelector(state => state.loading);
 
@@ -200,7 +200,7 @@ export default function EnhancedTable() {
       {!loading &&
         <div className={classes.root}>
           <Paper className={classes.paper}>
-            <EnhancedTableToolbar data = {exchange}/>
+            <EnhancedTableToolbar/>
             <TableContainer>
               <Table
                 className={classes.table}

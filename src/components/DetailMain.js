@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
 import NewsItem from './NewsItem';
-import CandleChart from './CandleChart';
+import CandleChart from './charts/CandleChart';
 import About from './DetailAbout';
 
 const useStyles = makeStyles({
@@ -46,9 +46,10 @@ export default function DetailMain() {
             {candleData.s === "ok" && <CandleChart data = {candleData} loading = {loading}/>}
             {
               candleData.s !== "ok" && 
-              <Typography variant="h1" gutterBottom>
-                No Data
-              </Typography>
+              <Alert severity="warning">
+                <AlertTitle>Not Found Chart Data</AlertTitle>
+                차트 데이터를 발견하지 못했습니다!
+              </Alert>
             }
           </div>
           <div>

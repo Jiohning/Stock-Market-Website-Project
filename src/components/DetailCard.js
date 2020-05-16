@@ -9,6 +9,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
+import { Alert, AlertTitle } from '@material-ui/lab';
+
+
+import RecommendChart from './charts/RecommendChart';
 
 const useStyles = makeStyles((theme) => ({
   root_card: {
@@ -31,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
   pos: {
     marginBottom: 12,
   },
+  recom: {
+    marginTop: '10px'
+  }
 }));
 
 export default function DetailCard() {
@@ -39,6 +46,7 @@ export default function DetailCard() {
   const price = useSelector(state => state.price);
   const exchange = useSelector(state => state.exchange);
   const loading = useSelector(state => state.loading);
+  const recommend = useSelector(state => state.recommendation);
 
   const [value, setValue] = React.useState('');
 
@@ -56,41 +64,56 @@ export default function DetailCard() {
   return(
     <>
       {!loading && 
-        <Card className={classes.root_card}>
-          <CardContent>
-            <Typography variant="h5" component="h2">
-              Buy {stock.symbol}
-            </Typography>
-            <Divider/>
-            <div>
-              <List component="nav" aria-label="main mailbox folders">
-                <ListItem>
-                  <ListItemText primary="Shares" />
-                  <form className={classes.root} noValidate autoComplete="off">
-                    <TextField id="outlined-basic" label="only number" variant="outlined" 
-                      value={value}
-                      onChange={handleChange}/>
-                  </form>
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Market Price" /> {exchange.currency} {price.c}
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Commision" /> {exchange.currency} 0.00
-                </ListItem>
-              </List>
-            </div>
-            
-            <Divider/>
+        <>
+          <Card className={classes.root_card}>
+            <CardContent>
+              <Typography variant="h5" component="h2">
+                Buy {stock.symbol}
+              </Typography>
+              <Divider/>
+              <div>
+                <List component="nav" aria-label="main mailbox folders">
+                  <ListItem>
+                    <ListItemText primary="Shares" />
+                    <form className={classes.root} noValidate autoComplete="off">
+                      <TextField id="outlined-basic" label="only number" variant="outlined" 
+                        value={value}
+                        onChange={handleChange}/>
+                    </form>
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText primary="Market Price" /> {exchange.currency} {price.c}
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText primary="Commision" /> {exchange.currency} 0.00
+                  </ListItem>
+                </List>
+              </div>
+              
+              <Divider/>
 
-            <Typography variant="h6" component="h2">
-              Estimated Cost {exchange.currency} {calculator()}
-            </Typography>
-            <Typography className={classes.pos} color="textSecondary">
-              If you want to buy {stock.symbol}, we recommend securities company.
-            </Typography>
-          </CardContent>
-        </Card>
+              <Typography variant="h6" component="h2">
+                Estimated Cost {exchange.currency} {calculator()}
+              </Typography>
+            </CardContent>
+          </Card>
+          <div className={classes.recom}>
+            {recommend.length === 0 && 
+              <Alert className={classes.alert} severity="info">
+                <AlertTitle>Info</AlertTitle>
+                Not Found recommendation trends
+              </Alert>
+            }
+            {recommend.length > 0 &&
+              <Card className={classes.root_card}>
+                <RecommendChart data = {recommend}/>
+              </Card>
+            }
+          </div>
+          
+          
+        </>
+        
       }
     </>
     

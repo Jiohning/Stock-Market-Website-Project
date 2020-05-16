@@ -8,6 +8,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+import notfound from './notFound.jpg';
+
 const useStyles = makeStyles({
   root: {
     maxWidth: '100%',
@@ -24,6 +26,11 @@ const useStyles = makeStyles({
 export default function NewsItem({news}) {
   const classes = useStyles();
 
+  const handleError = (event) => {
+    event.target.src = {notfound};
+    event.target.onerror = null;
+  }
+
   return(
     <Card className={classes.root}>
       <CardActionArea>
@@ -31,6 +38,7 @@ export default function NewsItem({news}) {
           className={classes.media}
           image={news.image}
           title={news.category}
+          onError={(e) => {handleError(e)}}
         />
         <CardContent>
           <Typography gutterBottom variant="subtitle2" component="h2">

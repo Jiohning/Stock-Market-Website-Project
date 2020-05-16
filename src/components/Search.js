@@ -5,12 +5,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
-import { selectStock } from '../actions/index';
-import { selectPrice } from '../actions/price';
-import getCompanyNews from '../actions/getCompanyNews';
-import candle from '../actions/getCandle';
-import { startLoading } from '../actions/index';
-import getAbout from '../actions/getAbout';
+import { selectStock, getCompanyNews, getCandle, startLoading, getAbout, selectPrice, recommend } from '../actions/index';
 
 export default function Search() {
   const stocks = useSelector(state => state.stocks);
@@ -70,7 +65,8 @@ export default function Search() {
             dispatch(selectPrice(value.symbol))
             dispatch(selectStock(value))
             dispatch(getCompanyNews(value.symbol, getFrom(), getTo()))
-            dispatch(candle(value.symbol, time()-86400, time()))
+            dispatch(getCandle(value.symbol, time()-86400, time()))
+            dispatch(recommend(value.symbol))
             dispatch(getAbout(value.symbol))
             pageClick(value.description)
           }}
