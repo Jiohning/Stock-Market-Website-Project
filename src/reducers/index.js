@@ -344,7 +344,8 @@ const initialState = {
   about: null,
   loading: false,
   recommendation: [],
-  error: [],
+  peers: [],
+  error: null,
 };
 
 const reducer = produce((state, action) => {
@@ -380,8 +381,14 @@ const reducer = produce((state, action) => {
     case 'GET_RECOMMENDATION':
         state.recommendation = action.payload;
         break;
+    case 'GET_PEERS':
+        state.peers = action.payload;
+        break;
     case 'ERROR':
         state.error = action.payload;
+        break;
+    case 'CLEAR_ERRORS':
+        state.error = null;
         break;
     case 'START_LOADING':
       state.loading = true;

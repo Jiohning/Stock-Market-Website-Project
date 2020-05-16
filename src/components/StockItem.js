@@ -4,7 +4,7 @@ import TableCell from '@material-ui/core/TableCell';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
-import { selectStock, startLoading, recommend, getAbout, getCandle, getCompanyNews, selectPrice } from '../actions/index';
+import { selectStock, startLoading, recommend, getAbout, getCandle, getCompanyNews, selectPrice, getPeers } from '../actions/index';
 
 
 
@@ -63,6 +63,7 @@ export default function StockItem({item}) {
           dispatch(getCandle(item.symbol, time()-86400, time()))
           dispatch(recommend(item.symbol))
           dispatch(getAbout(item.symbol))
+          dispatch(getPeers(item.symbol))
           pageClick(item.description)}}>  
           <TableCell padding="checkbox"/>
           <TableCell>{stock.description}</TableCell>

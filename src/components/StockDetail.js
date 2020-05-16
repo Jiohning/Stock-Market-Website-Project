@@ -4,6 +4,7 @@ import Container from '@material-ui/core/Container';
 
 import DetailMain from './DetailMain';
 import DetailCard from './DetailCard';
+import Websocket from './websocket';
 
 export default function Detail(){
 
@@ -12,6 +13,7 @@ export default function Detail(){
       <Grid container spacing={2}>
         <Grid item xs={8}>
           <Container>
+            <Websocket/>
             <DetailMain/>
           </Container>
         </Grid>
