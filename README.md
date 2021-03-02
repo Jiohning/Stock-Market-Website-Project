@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 # React를 사용한 주식 정보 웹페이지💸
 ## [👉Stock Market 바로가기👈](https://frosty-brown-93c069.netlify.app)
+=======
+## Project URL --> https://frosty-brown-93c069.netlify.app
+>>>>>>> 2a6a7f6651311bca5f4459fe0ddc0bb95caf9105
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
